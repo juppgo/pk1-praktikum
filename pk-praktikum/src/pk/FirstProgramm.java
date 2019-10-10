@@ -3,7 +3,7 @@ package pk;
 public class FirstProgramm {
 
 	public static void main(String[] args) {
-		maleTreppe(6, 2);
+		maleTreppe(8, 3);
 	}
 
 	public static void maleTreppe(int hoehe, int stufentiefe) {
@@ -18,10 +18,17 @@ public class FirstProgramm {
 			}
 			stufentiefe += counter;
 		}
-		for (int i = 0; i < array.length; i++) {
+		char[][] a = new char[array.length][array[0].length];
+		for(int i = 0; i < array.length; i++) {
+			for(int j = 0; j < array[i].length; j++) {
+				a[i][j] = array[i][array[i].length-j-1];
+			}
+		}
+		
+		for (int i = 0; i < a.length; i++) {
 			System.out.println();
-			for (int j = 0; j < array[i].length; j++) {
-				System.out.print(array[i][j]);
+			for (int j = 0; j < a[i].length; j++) {
+				System.out.print(a[i][j]);
 			}
 		}
 	}
