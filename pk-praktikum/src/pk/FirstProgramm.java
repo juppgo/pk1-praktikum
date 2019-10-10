@@ -5,7 +5,7 @@ public class FirstProgramm {
 	public static void main(String[] args) {
 		maleTreppe(8, 3);
 	}
-
+// --- Kommentar hinzugefügt --- //
 	public static void maleTreppe(int hoehe, int stufentiefe) {
 		char[][] array = new char[hoehe][hoehe * stufentiefe + 1];
 		int counter = stufentiefe;
