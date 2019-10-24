@@ -43,7 +43,7 @@ public class Lernkarte {
 	public void zeigeRueckseite() {
 		System.out.println(antwort);
 	}
-  
+
 	public void druckeKarte() {
 		zeigeVorderseite();
 		zeigeRueckseite();
