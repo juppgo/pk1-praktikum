@@ -22,7 +22,7 @@ public class Anwendung {
 		lernkartei.druckeAlleKarten();
 		System.out.println("\nMethodenaufruf: gibKartenZuKategorie\n");
 		for (Lernkarte karte : lernkartei.gibKartenZuKategorie("Kategorie 01")) {
-			if (karte != null) {
+			if (karte != null) { 
 				karte.druckeKarte();
 			}
 		}
