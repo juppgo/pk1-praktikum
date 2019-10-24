@@ -17,23 +17,23 @@ public class Lernkarte {
 	}
 
 	public String getKategorie() {
-		return kategorie;
+		return this.kategorie;
 	}
 
 	public String getTitel() {
-		return titel;
+		return this.titel;
 	}
 
 	public String getFrage() {
-		return frage;
+		return this.frage;
 	}
 
 	public String getAntwort() {
-		return antwort;
+		return this.antwort;
 	}
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public void zeigeVorderseite() {

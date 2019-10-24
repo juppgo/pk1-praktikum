@@ -4,6 +4,7 @@ public class FirstProgramm {
 
 	public static void main(String[] args) {
 		maleTreppe(8, 3);
+		maleTreppe(6, 2);
 	}
 
 	public static void maleTreppe(int hoehe, int stufentiefe) {
@@ -24,7 +25,7 @@ public class FirstProgramm {
 				a[i][j] = array[i][array[i].length-j-1];
 			}
 		}
-		
+		System.out.println();
 		for (int i = 0; i < a.length; i++) {
 			System.out.println();
 			for (int j = 0; j < a[i].length; j++) {
