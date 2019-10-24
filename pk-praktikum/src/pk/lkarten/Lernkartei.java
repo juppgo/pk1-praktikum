@@ -53,7 +53,7 @@ public class Lernkartei {
 		}
 		return aKategorie;
 	}
- 
+  
 	public Lernkarte[] erzeugeDeck(int anzahlKarten) {
 		Lernkarte[] deck = new Lernkarte[anzahlKarten];
 		Random ran = new Random();
