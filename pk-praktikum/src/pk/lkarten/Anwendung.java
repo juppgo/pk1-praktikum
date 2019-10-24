@@ -11,7 +11,7 @@ public class Anwendung {
 		lernkartei.hinzufuegen(new Lernkarte("Kategorie 01", "Titel 01", "Frage 01", "Antwort 01"));
 		lernkartei.hinzufuegen(new Lernkarte("Kategorie 02", "Titel 02", "Frage 02", "Antwort 02"));
 		lernkartei.hinzufuegen(new Lernkarte("Kategorie 01", "Titel 03", "Frage 03", "Antwort 03"));
-		
+		 
 			// Test, ob Fehlermeldung bei überschreiten der Kapazitätsgrenze erscheint
 		lernkartei.hinzufuegen(new Lernkarte("Kategorie 04", "Titel 04", "Frage 04", "Antwort 04"));
 
