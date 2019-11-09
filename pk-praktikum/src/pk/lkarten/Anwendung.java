@@ -5,15 +5,15 @@ public class Anwendung {
 	public static void main(String[] args) {
 
 		// 1. Instanz der Klasse erzeugen
-		Lernkartei lernkartei = new Lernkartei(3);
+		Lernkartei lernkartei = new Lernkartei(4);
 
 		// 2. Drei Lernkarten erzeugen
-		lernkartei.hinzufuegen(new Lernkarte("Kategorie 01", "Titel 01", "Frage 01", "Antwort 01"));
-		lernkartei.hinzufuegen(new Lernkarte("Kategorie 02", "Titel 02", "Frage 02", "Antwort 02"));
-		lernkartei.hinzufuegen(new Lernkarte("Kategorie 01", "Titel 03", "Frage 03", "Antwort 03"));
-
+		lernkartei.hinzufuegen(new EinzelantwortKarte("Kategorie 01", "Titel 01", "Frage 01", "Antwort 01"));
+		lernkartei.hinzufuegen(new EinzelantwortKarte("Kategorie 02", "Titel 02", "Frage 02", "Antwort 02"));
+		lernkartei.hinzufuegen(new MehrfachantwortKarte("Kategorie 01", "Titel 03", "Frage 03", new String[] {"Antwort 01", "Antwort 02", "Antwort 03"}, new int[] {0,2}));
+		lernkartei.hinzufuegen(new MehrfachantwortKarte("Kategorie 02", "Titel 04", "Frage 04", new String[] {"Antwort 01", "Antwort 02" }, new int[] {1}));
 			// Test, ob Fehlermeldung bei überschreiten der Kapazitätsgrenze erscheint
-		lernkartei.hinzufuegen(new Lernkarte("Kategorie 04", "Titel 04", "Frage 04", "Antwort 04"));
+		lernkartei.hinzufuegen(new EinzelantwortKarte("Kategorie 04", "Titel 04", "Frage 04", "Antwort 04"));
 
 		// 3. alle Methoden aufrufen
 		System.out.println("\nMethodenaufruf: gibAnzahlKarten\n");
