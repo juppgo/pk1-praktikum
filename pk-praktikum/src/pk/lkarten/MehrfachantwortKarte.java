@@ -6,7 +6,8 @@ public class MehrfachantwortKarte extends Lernkarte {
 	private int[] richtigeAntworten;
 	boolean mehrereAntworten;
 
-	public MehrfachantwortKarte(String kategorie, String titel, String frage, String[] moeglicheAntworten, int[] richtigeAntworten) {
+	public MehrfachantwortKarte(String kategorie, String titel, String frage, String[] moeglicheAntworten,
+			int[] richtigeAntworten) {
 		super(kategorie, titel, frage);
 		this.moeglicheAntworten = moeglicheAntworten;
 		this.richtigeAntworten = richtigeAntworten;
@@ -19,18 +20,17 @@ public class MehrfachantwortKarte extends Lernkarte {
 	public int[] getRichtigeAntworten() {
 		return richtigeAntworten;
 	}
-	
+
 	public void printMoeglicheAntworten() {
 		int counter = 1;
-		for(int i = 0; i < this.moeglicheAntworten.length; i++) {
-			if(this.moeglicheAntworten[i] != null) {
+		for (int i = 0; i < this.moeglicheAntworten.length; i++) {
+			if (this.moeglicheAntworten[i] != null) {
 				System.out.println(counter + ": " + this.moeglicheAntworten[i]);
 				counter++;
 			}
 		}
 	}
-	
-	@Override
+
 	public void zeigeVorderseite() {
 		System.out.println("[" + this.getId() + ", " + this.getKategorie() + " ] " + this.getTitel() + ":" + "\n"
 				+ this.getFrage() + "\n");
@@ -40,12 +40,11 @@ public class MehrfachantwortKarte extends Lernkarte {
 		}
 	}
 
-	@Override
 	public void zeigeRueckseite() {
 		System.out.println();
 		System.out.println("Die richtigen Antworten sind:");
-		for(int i = 0; i < this.richtigeAntworten.length; i++) {
-			System.out.println(richtigeAntworten[i]+1 + ": " + moeglicheAntworten[richtigeAntworten[i]]);
+		for (int i = 0; i < this.richtigeAntworten.length; i++) {
+			System.out.println(richtigeAntworten[i] + 1 + ": " + moeglicheAntworten[richtigeAntworten[i]]);
 		}
 		System.out.println();
 	}

@@ -1,64 +1,50 @@
 package pk.lkarten;
 
+import java.util.ArrayList;
+import java.util.ListIterator;
 import java.util.Random;
 
 public class Lernkartei {
 
-	private Lernkarte[] karten;
+	private ArrayList<Lernkarte> karten;
 
-	public Lernkartei(int kapazitaet) {
-		this.karten = new Lernkarte[kapazitaet];
+	public Lernkartei() {
+		this.karten = new ArrayList<Lernkarte>();
 	}
 
 	public void hinzufuegen(Lernkarte karte) {
-		boolean full = true;
-		for (int i = 0; i < karten.length; i++) {
-			if (karten[i] == null) {
-				karten[i] = karte;
-				full = false;
-				break;
-			}
-		}
-		if (full) {
-			System.out.println("Fehlermeldung: Das Array ist voll!");
-		}
+		karten.add(karte);
 	}
 
 	public void druckeAlleKarten() {
-		for (int i = 0; i < karten.length; i++) {
-			if (karten[i] != null) {
-				karten[i].druckeKarte();
-			}
+		ListIterator<Lernkarte> kartenIterator = karten.listIterator(0);
+		while (kartenIterator.hasNext()) {
+			kartenIterator.next().druckeKarte();
 		}
 	}
 
 	public int gibAnzahlKarten() {
-		int sum = 0;
-		for (int i = 0; i < karten.length; i++) {
-			if (karten[i] != null) {
-				sum++;
-			}
+		for (int i = 0; i < karten.size(); i++) {
+			karten.size();
 		}
-		return sum;
+		return karten.size();
 	}
 
-	public Lernkarte[] gibKartenZuKategorie(String kategorie) {
-		Lernkarte[] aKategorie = new Lernkarte[karten.length];
-		int counter = 0;
-		for (int i = 0; i < karten.length; i++) {
-			if (karten[i] != null && karten[i].getKategorie().equals(kategorie)) {
-				aKategorie[counter] = karten[i];
-				counter++;
+	public ArrayList<Lernkarte> gibKartenZuKategorie(String kategorie) {
+		ArrayList<Lernkarte> arrayListKategorie = new ArrayList<Lernkarte>();
+		for(Lernkarte lernkarten: karten) {
+			if(lernkarten.getKategorie().equals(kategorie)) {
+				arrayListKategorie.add(lernkarten);
 			}
 		}
-		return aKategorie;
+		return arrayListKategorie;
 	}
 
-	public Lernkarte[] erzeugeDeck(int anzahlKarten) {
-		Lernkarte[] deck = new Lernkarte[anzahlKarten];
+	public ArrayList<Lernkarte> erzeugeDeck(int anzahlKarten) {
+		ArrayList<Lernkarte> deck = new ArrayList<Lernkarte>();
 		Random ran = new Random();
 		for (int i = 0; i < anzahlKarten; i++) {
-			deck[i] = karten[gibAnzahlKarten() == 1 ? 0 : ran.nextInt(gibAnzahlKarten())];
+			deck.add(karten.get(gibAnzahlKarten() == 1 ? 0 : ran.nextInt(gibAnzahlKarten())));
 		}
 		return deck;
 	}
