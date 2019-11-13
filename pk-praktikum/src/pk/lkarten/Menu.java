@@ -13,7 +13,8 @@ public class Menu {
 	public void liesEingabe() {
 		// Anlegen einer Einzelantwortkarte, sowie Ausgabe der gibAnzahlKarten()-Methode, um alle Methoden der Lernkartei aufzurufen
 		lernkartei.hinzufuegen(new EinzelantwortKarte("Kategorie 01", "Titel 01", "Frage 01", "Antwort 01"));
-		System.out.println(lernkartei.gibAnzahlKarten());
+		System.out.println("Test der Klasse gibAnzahlKarten()");
+		System.out.println(lernkartei.gibAnzahlKarten() +"\n");
 		showMenu();
 		while (true) {
 			int auswahl = sc.nextInt();
