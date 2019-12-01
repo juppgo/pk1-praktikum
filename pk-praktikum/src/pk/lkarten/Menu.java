@@ -1,30 +1,42 @@
 package pk.lkarten;
 
-
-
 import java.io.IOException;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
 
-
 public class Menu {
 
 	Lernkartei lernkartei = new Lernkartei();
 	Scanner sc = new Scanner(System.in);
-	
-	public void liesEingabe() {
-		// Anlegen einer Einzelantwortkarte, sowie Ausgabe der gibAnzahlKarten()-Methode, um alle Methoden der Lernkartei aufzurufen
+
+	public void liesEingabe() throws UngueltigeEingabeException, UngueltigeZahlException {
+		// Anlegen einer Einzelantwortkarte, sowie Ausgabe der
+		// gibAnzahlKarten()-Methode, um alle Methoden der Lernkartei aufzurufen
 		lernkartei.hinzufuegen(new EinzelantwortKarte("Kategorie 01", "Titel 01", "Frage 01", "Antwort 01"));
 		lernkartei.hinzufuegen(new EinzelantwortKarte("Kategorie 02", "Titel 02", "Frage 02", "Antwort 02"));
 		lernkartei.hinzufuegen(new EinzelantwortKarte("Kategorie 03", "Titel 03", "Frage 03", "Antwort 03"));
 		lernkartei.hinzufuegen(new EinzelantwortKarte("Kategorie 04", "Titel 04", "Frage 04", "Antwort 04"));
 		System.out.println("Test der Klasse gibAnzahlKarten()");
-		System.out.println(lernkartei.gibAnzahlKarten() +"\n");
+		System.out.println(lernkartei.gibAnzahlKarten() + "\n");
 		showMenu();
 		while (true) {
-			int auswahl = sc.nextInt();
-			switch (auswahl) {
+			int i = 0;
+			try {
+				String s = sc.nextLine();
+				if (s.matches("[0-9]")) {
+					i = Integer.parseInt(s);
+				} else
+					throw new UngueltigeZahlException("Keine valide Zahl");
+				if (i > 5 || i < 0) {
+					throw new UngueltigeEingabeException("Für diese Zahl gibt es keinen Menüeintrag");
+				}
+			} catch (UngueltigeZahlException | UngueltigeEingabeException exp) {
+				System.err.println(exp.getMessage());
+				showMenu();
+				continue;
+			}
+			switch (i) {
 			case 1:
 				ArrayList<Lernkarte> karten = lernkartei.erzeugeDeck(5);
 				for (Lernkarte karte : karten) {
