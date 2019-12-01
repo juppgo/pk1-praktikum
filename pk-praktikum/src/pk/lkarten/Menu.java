@@ -1,9 +1,12 @@
 package pk.lkarten;
 
+
+
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
+import java.util.ArrayList;
+
 
 public class Menu {
 
@@ -13,6 +16,9 @@ public class Menu {
 	public void liesEingabe() {
 		// Anlegen einer Einzelantwortkarte, sowie Ausgabe der gibAnzahlKarten()-Methode, um alle Methoden der Lernkartei aufzurufen
 		lernkartei.hinzufuegen(new EinzelantwortKarte("Kategorie 01", "Titel 01", "Frage 01", "Antwort 01"));
+		lernkartei.hinzufuegen(new EinzelantwortKarte("Kategorie 02", "Titel 02", "Frage 02", "Antwort 02"));
+		lernkartei.hinzufuegen(new EinzelantwortKarte("Kategorie 03", "Titel 03", "Frage 03", "Antwort 03"));
+		lernkartei.hinzufuegen(new EinzelantwortKarte("Kategorie 04", "Titel 04", "Frage 04", "Antwort 04"));
 		System.out.println("Test der Klasse gibAnzahlKarten()");
 		System.out.println(lernkartei.gibAnzahlKarten() +"\n");
 		showMenu();
