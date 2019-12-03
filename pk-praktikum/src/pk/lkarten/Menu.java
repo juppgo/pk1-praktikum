@@ -10,7 +10,7 @@ public class Menu {
 	Lernkartei lernkartei = new Lernkartei();
 	Scanner sc = new Scanner(System.in);
 
-	public void liesEingabe() throws UngueltigeEingabeException, UngueltigeZahlException {
+	public void liesEingabe() throws UngueltigeEingabeException, UngueltigeZahlException, UngueltigeKarteException {
 		// Anlegen einer Einzelantwortkarte, sowie Ausgabe der
 		// gibAnzahlKarten()-Methode, um alle Methoden der Lernkartei aufzurufen
 		lernkartei.hinzufuegen(new EinzelantwortKarte("Kategorie 01", "Titel 01", "Frage 01", "Antwort 01"));
@@ -29,7 +29,7 @@ public class Menu {
 				} else
 					throw new UngueltigeZahlException("Keine valide Zahl");
 				if (i > 5 || i < 0) {
-					throw new UngueltigeEingabeException("Für diese Zahl gibt es keinen Menüeintrag");
+					throw new UngueltigeEingabeException("Fuer diese Zahl gibt es keinen Menï¿½eintrag");
 				}
 			} catch (UngueltigeZahlException | UngueltigeEingabeException exp) {
 				System.err.println(exp.getMessage());
@@ -41,21 +41,25 @@ public class Menu {
 				ArrayList<Lernkarte> karten = lernkartei.erzeugeDeck(5);
 				for (Lernkarte karte : karten) {
 					karte.zeigeVorderseite();
-					System.out.println("<Drücken Sie Enter, um die Rückseite der Karte zu sehen.>");
+					System.out.println("<Druecken Sie Enter, um die Rueckseite der Karte zu sehen.>");
 					warteAufEnter();
 					karte.zeigeRueckseite();
-					System.out.println("<Drücken Sie Enter, um die nächste Karte zu sehen.>");
+					System.out.println("<Druecken Sie Enter, um die naechste Karte zu sehen.>");
 					warteAufEnter();
 				}
 				System.out.println("<Alle Karten betrachtet.>");
 				showMenu();
 				break;
 			case 2:
-				String kategorie = JOptionPane.showInputDialog(null, "Bitte geben Sie eine Kategorie ein:");
-				String titel = JOptionPane.showInputDialog(null, "Bitte geben Sie einen Titel ein:");
-				String frage = JOptionPane.showInputDialog(null, "Bitte geben Sie eine Frage ein:");
-				String antwort = JOptionPane.showInputDialog(null, "Bitte geben Sie eine Antwort ein:");
-				lernkartei.hinzufuegen(new EinzelantwortKarte(kategorie, titel, frage, antwort));
+				try {
+					String kategorie = JOptionPane.showInputDialog(null, "Bitte geben Sie eine Kategorie ein:");
+					String titel = JOptionPane.showInputDialog(null, "Bitte geben Sie einen Titel ein:");
+					String frage = JOptionPane.showInputDialog(null, "Bitte geben Sie eine Frage ein:");
+					String antwort = JOptionPane.showInputDialog(null, "Bitte geben Sie eine Antwort ein:");
+					lernkartei.hinzufuegen(new EinzelantwortKarte(kategorie, titel, frage, antwort));
+				} catch (UngueltigeKarteException exp) {
+					JOptionPane.showMessageDialog(null, exp.getFehlerAusgabe(),"Warnung!",JOptionPane.WARNING_MESSAGE, null);
+				}
 				showMenu();
 				break;
 			case 3:
@@ -64,7 +68,7 @@ public class Menu {
 				break;
 			case 4:
 				String auswahlKategorie = JOptionPane.showInputDialog(null,
-						"Bitte geben Sie die gewünschte Kategorie ein:");
+						"Bitte geben Sie die gewuenschte Kategorie ein:");
 				lernkartei.gibKartenZuKategorie(auswahlKategorie);
 				for (Lernkarte karte : lernkartei.gibKartenZuKategorie("Kategorie 01")) {
 					karte.druckeKarte();
@@ -80,8 +84,8 @@ public class Menu {
 
 	private void showMenu() {
 		System.out.println(
-				"Lernkarten-App\n" + "1. Lernen! \n" + "2. Einzelantwortkarte hinzufügen\n" + "3. Drucke alle Karten\n"
-						+ "4. Drucke Karten zu Kategorie\n" + "5. Beenden\n" + "Bitte Aktion wählen:");
+				"Lernkarten-App\n" + "1. Lernen! \n" + "2. Einzelantwortkarte hinzufuegen\n" + "3. Drucke alle Karten\n"
+						+ "4. Drucke Karten zu Kategorie\n" + "5. Beenden\n" + "Bitte Aktion waehlen:");
 	}
 
 	private void warteAufEnter() {

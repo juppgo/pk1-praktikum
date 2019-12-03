@@ -38,7 +38,7 @@ public class MehrfachantwortKarte extends Lernkarte {
 				+ this.getFrage() + "\n");
 		printMoeglicheAntworten();
 		if (this.richtigeAntworten.length > 1) {
-			System.out.println("(mehrere Antworten möglich)");
+			System.out.println("(mehrere Antworten moeglich)");
 		}
 	}
 
@@ -74,8 +74,6 @@ public class MehrfachantwortKarte extends Lernkarte {
 			return false;
 		if (!Arrays.equals(moeglicheAntworten, other.moeglicheAntworten))
 			return false;
-		if (!Arrays.equals(richtigeAntworten, other.richtigeAntworten))
-			return false;
-		return true;
-	}
+        return Arrays.equals(richtigeAntworten, other.richtigeAntworten);
+    }
 }

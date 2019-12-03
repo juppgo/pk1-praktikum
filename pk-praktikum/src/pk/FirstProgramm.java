@@ -25,11 +25,11 @@ public class FirstProgramm {
 				a[i][j] = array[i][array[i].length-j-1];
 			}
 		}
-		
-		for (int i = 0; i < a.length; i++) {
+
+		for (char[] chars : a) {
 			System.out.println();
-			for (int j = 0; j < a[i].length; j++) {
-				System.out.print(a[i][j]);
+			for (int j = 0; j < chars.length; j++) {
+				System.out.print(chars[j]);
 			}
 		}
 	}

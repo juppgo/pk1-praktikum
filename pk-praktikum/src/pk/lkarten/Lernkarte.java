@@ -1,6 +1,6 @@
 package pk.lkarten;
 
-public abstract class Lernkarte {
+public abstract class Lernkarte implements ValidierbareKarte {
 	private final int id;
 	private static int IDCOUNT = 1;
 	private String kategorie;
@@ -11,10 +11,7 @@ public abstract class Lernkarte {
 		this.kategorie = kategorie;
 		this.titel = titel;
 		this.frage = frage;
-		// Abfangen, dass ID hochgez�hlt wird falls das Objekt schon im Hashset
-		// vorhanden ist
 		this.id = IDCOUNT++;
-
 	}
 
 	public String getKategorie() {
@@ -42,13 +39,24 @@ public abstract class Lernkarte {
 		zeigeRueckseite();
 	}
 
+	public void validiere() throws UngueltigeKarteException {
+		if(this.kategorie.isBlank()) {
+			throw new UngueltigeKarteException("* Keine gültige Kategorie angegeben!\n");
+		}
+		if(this.kategorie.isBlank()) {
+			throw new UngueltigeKarteException("* Keine gültige Frage angegeben!\n");
+		}
+		if(this.titel.isBlank()) {
+			throw new UngueltigeKarteException("* Keinen gültigen Titel angegeben!\n");
+		}
+
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((frage == null) ? 0 : frage.hashCode());
-		// ID nicht vergleichbar, da fortlaufend
-		// result = prime * result + id;
 		result = prime * result + ((kategorie == null) ? 0 : kategorie.hashCode());
 		result = prime * result + ((titel == null) ? 0 : titel.hashCode());
 		return result;
@@ -76,11 +84,8 @@ public abstract class Lernkarte {
 		} else if (!kategorie.equals(other.kategorie))
 			return false;
 		if (titel == null) {
-			if (other.titel != null)
-				return false;
-		} else if (!titel.equals(other.titel))
-			return false;
-		return true;
-	}
+            return other.titel == null;
+		} else return titel.equals(other.titel);
+    }
 
 }

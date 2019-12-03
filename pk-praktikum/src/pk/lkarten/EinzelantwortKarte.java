@@ -1,6 +1,6 @@
 package pk.lkarten;
 
-public class EinzelantwortKarte extends Lernkarte {
+public class EinzelantwortKarte extends Lernkarte implements ValidierbareKarte {
 
 	private String antwort;
 
@@ -24,6 +24,14 @@ public class EinzelantwortKarte extends Lernkarte {
 		System.out.println();
 	}
 
+	public void validiere() throws UngueltigeKarteException {
+		super.validiere();
+		if(this.antwort == null || this.antwort.isBlank()) {
+			throw new UngueltigeKarteException("* Keine gültige Antwort gegeben!\n");
+		}
+
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -42,11 +50,8 @@ public class EinzelantwortKarte extends Lernkarte {
 			return false;
 		EinzelantwortKarte other = (EinzelantwortKarte) obj;
 		if (antwort == null) {
-			if (other.antwort != null)
-				return false;
-		} else if (!antwort.equals(other.antwort))
-			return false;
-		return true;
+			return other.antwort == null;
+		} else return antwort.equals(other.antwort);
 	}
 	
 }
