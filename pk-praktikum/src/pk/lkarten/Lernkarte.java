@@ -40,17 +40,22 @@ public abstract class Lernkarte implements ValidierbareKarte {
 	}
 
 	public void validiere() throws UngueltigeKarteException {
-		if(this.kategorie.isBlank()) {
-			throw new UngueltigeKarteException("* Keine gültige Kategorie angegeben!\n");
+		String fehlerstring = "";
+		if (this.kategorie.isBlank()) {
+			//UngueltigeKarteException.setFehler("* Keine gültige Kategorie angegeben!\n");
+			fehlerstring += "* Keine gültige Kategorie angegeben!\n";
 		}
-		if(this.kategorie.isBlank()) {
-			throw new UngueltigeKarteException("* Keine gültige Frage angegeben!\n");
+		if (this.kategorie.isBlank()) {
+			//UngueltigeKarteException.setFehler("* Keine gültige Frage angegeben!\n");
+			fehlerstring += "* Keine gültige Frage angegeben!\n";
 		}
-		if(this.titel.isBlank()) {
-			throw new UngueltigeKarteException("* Keinen gültigen Titel angegeben!\n");
+		if (this.titel.isBlank()) {
+			//UngueltigeKarteException.setFehler("* Keinen gültigen Titel angegeben!\n");
+			fehlerstring += "* Keinen gültigen Titel angegeben!\n";
 		}
-
+		throw new UngueltigeKarteException(fehlerstring);
 	}
+
 
 	@Override
 	public int hashCode() {

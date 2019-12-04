@@ -25,12 +25,25 @@ public class EinzelantwortKarte extends Lernkarte implements ValidierbareKarte {
 	}
 
 	public void validiere() throws UngueltigeKarteException {
-		super.validiere();
-		if(this.antwort == null || this.antwort.isBlank()) {
-			throw new UngueltigeKarteException("* Keine gültige Antwort gegeben!\n");
+		String fehlerstring = "";
+		try {
+			super.validiere();
+		}
+		catch(UngueltigeKarteException exp) {
+			fehlerstring+= exp.getMessage();
+			if(this.antwort.isBlank()) {
+				//UngueltigeKarteException.setFehler("* Keine gültige Antwort gegeben!\n");
+				fehlerstring += "* Keine gültige Antwort gegeben!\n";
+			}
+			if(fehlerstring.isBlank()) {
+				return;
+			}throw new UngueltigeKarteException(fehlerstring);
 		}
 
-	}
+		}
+
+
+
 
 	@Override
 	public int hashCode() {
