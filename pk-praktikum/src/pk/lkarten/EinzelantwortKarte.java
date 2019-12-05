@@ -39,6 +39,13 @@ public class EinzelantwortKarte extends Lernkarte implements ValidierbareKarte {
 			throw new UngueltigeKarteException(fehlerstring);
 		}
 	}
+	
+	public String expoertiereAlsCsv() {
+		String export = "";
+		
+		
+		return export;
+	}
 
 	@Override
 	public int hashCode() {
