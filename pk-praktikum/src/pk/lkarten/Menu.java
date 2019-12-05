@@ -58,7 +58,8 @@ public class Menu {
 					String antwort = JOptionPane.showInputDialog(null, "Bitte geben Sie eine Antwort ein:");
 					lernkartei.hinzufuegen(new EinzelantwortKarte(kategorie, titel, frage, antwort));
 				} catch (UngueltigeKarteException exp) {
-					JOptionPane.showMessageDialog(null, exp.getFehlerAusgabe(),"Warnung!",JOptionPane.WARNING_MESSAGE, null);
+					JOptionPane.showMessageDialog(null, exp.getFehlerAusgabe(), "Warnung!", JOptionPane.WARNING_MESSAGE,
+							null);
 				}
 				showMenu();
 				break;

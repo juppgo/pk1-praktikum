@@ -42,20 +42,16 @@ public abstract class Lernkarte implements ValidierbareKarte {
 	public void validiere() throws UngueltigeKarteException {
 		String fehlerstring = "";
 		if (this.kategorie.isBlank()) {
-			//UngueltigeKarteException.setFehler("* Keine gültige Kategorie angegeben!\n");
-			fehlerstring += "* Keine gültige Kategorie angegeben!\n";
+			fehlerstring += "* Keine gueltige Kategorie angegeben!\n";
 		}
-		if (this.kategorie.isBlank()) {
-			//UngueltigeKarteException.setFehler("* Keine gültige Frage angegeben!\n");
-			fehlerstring += "* Keine gültige Frage angegeben!\n";
+		if (this.frage.isBlank()) {
+			fehlerstring += "* Keine gueltige Frage angegeben!\n";
 		}
 		if (this.titel.isBlank()) {
-			//UngueltigeKarteException.setFehler("* Keinen gültigen Titel angegeben!\n");
-			fehlerstring += "* Keinen gültigen Titel angegeben!\n";
+			fehlerstring += "* Keinen gueltigen Titel angegeben!\n";
 		}
 		throw new UngueltigeKarteException(fehlerstring);
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -89,8 +85,9 @@ public abstract class Lernkarte implements ValidierbareKarte {
 		} else if (!kategorie.equals(other.kategorie))
 			return false;
 		if (titel == null) {
-            return other.titel == null;
-		} else return titel.equals(other.titel);
-    }
+			return other.titel == null;
+		} else
+			return titel.equals(other.titel);
+	}
 
 }

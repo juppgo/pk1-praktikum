@@ -17,7 +17,7 @@ public class EinzelantwortKarte extends Lernkarte implements ValidierbareKarte {
 	public void zeigeRueckseite() {
 		System.out.println(antwort);
 	}
-	
+
 	public void druckeKarte() {
 		zeigeVorderseite();
 		zeigeRueckseite();
@@ -28,22 +28,17 @@ public class EinzelantwortKarte extends Lernkarte implements ValidierbareKarte {
 		String fehlerstring = "";
 		try {
 			super.validiere();
-		}
-		catch(UngueltigeKarteException exp) {
-			fehlerstring+= exp.getMessage();
-			if(this.antwort.isBlank()) {
-				//UngueltigeKarteException.setFehler("* Keine gültige Antwort gegeben!\n");
-				fehlerstring += "* Keine gültige Antwort gegeben!\n";
+		} catch (UngueltigeKarteException exp) {
+			fehlerstring += exp.getMessage();
+			if (this.antwort.isBlank()) {
+				fehlerstring += "* Keine gueltige Antwort gegeben!\n";
 			}
-			if(fehlerstring.isBlank()) {
+			if (fehlerstring.isBlank()) {
 				return;
-			}throw new UngueltigeKarteException(fehlerstring);
+			}
+			throw new UngueltigeKarteException(fehlerstring);
 		}
-
-		}
-
-
-
+	}
 
 	@Override
 	public int hashCode() {
@@ -64,7 +59,8 @@ public class EinzelantwortKarte extends Lernkarte implements ValidierbareKarte {
 		EinzelantwortKarte other = (EinzelantwortKarte) obj;
 		if (antwort == null) {
 			return other.antwort == null;
-		} else return antwort.equals(other.antwort);
+		} else
+			return antwort.equals(other.antwort);
 	}
-	
+
 }

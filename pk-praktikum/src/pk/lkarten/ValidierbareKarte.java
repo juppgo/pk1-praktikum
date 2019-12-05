@@ -2,5 +2,5 @@ package pk.lkarten;
 
 public interface ValidierbareKarte {
 
-	void validiere() throws UngueltigeKarteException;
+	public void validiere() throws UngueltigeKarteException;
 }
