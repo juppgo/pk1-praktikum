@@ -1,16 +1,20 @@
 package pk.lkarten;
 
+import javax.swing.*;
+import java.io.File;
 import java.io.IOException;
-import java.util.Scanner;
-import javax.swing.JOptionPane;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Menu {
 
 	Lernkartei lernkartei = new Lernkartei();
 	Scanner sc = new Scanner(System.in);
 
-	public void liesEingabe() throws UngueltigeEingabeException, UngueltigeZahlException, UngueltigeKarteException {
+	public void liesEingabe() throws UngueltigeEingabeException, UngueltigeZahlException, UngueltigeKarteException, DateiBereitsVorhandenException {
 		// Anlegen einer Einzelantwortkarte, sowie Ausgabe der
 		// gibAnzahlKarten()-Methode, um alle Methoden der Lernkartei aufzurufen
 		lernkartei.hinzufuegen(new EinzelantwortKarte("Kategorie 01", "Titel 01", "Frage 01", "Antwort 01"));
@@ -29,7 +33,7 @@ public class Menu {
 				} else
 					throw new UngueltigeZahlException("Keine valide Zahl");
 				if (i > 5 || i < 0) {
-					throw new UngueltigeEingabeException("Fuer diese Zahl gibt es keinen Men�eintrag");
+					throw new UngueltigeEingabeException("Fuer diese Zahl gibt es keinen Menueeintrag");
 				}
 			} catch (UngueltigeZahlException | UngueltigeEingabeException exp) {
 				System.err.println(exp.getMessage());
@@ -70,23 +74,58 @@ public class Menu {
 			case 4:
 				String auswahlKategorie = JOptionPane.showInputDialog(null,
 						"Bitte geben Sie die gewuenschte Kategorie ein:");
-				lernkartei.gibKartenZuKategorie(auswahlKategorie);
-				for (Lernkarte karte : lernkartei.gibKartenZuKategorie("Kategorie 01")) {
+				for (Lernkarte karte : lernkartei.gibKartenZuKategorie(auswahlKategorie)) {
 					karte.druckeKarte();
 				}
 				showMenu();
 				break;
 			case 5:
-				sc.close();
-				return;
+				boolean isValid = true;
+				do {
+					try {
+						String datei = JOptionPane.showInputDialog(null, "Bitte geben Sie einen Dateinamen ein:");
+						if(datei.isBlank()) {
+							throw new UngueltigeEingabeException("Bitte geben Sie einen gültigen Dateinamen ein.");
+						}
+						if(!datei.isBlank()) {
+							String pathcheck = "/home/chris/pk1-praktikum/pk-praktikum/src/pk/lkarten/" + datei + ".csv";
+							Path path = Paths.get(pathcheck);
+							boolean goBack = true;
+							while(Files.exists(path) && goBack) {
+								//throw new DateiBereitsVorhandenException("Wollen Sie die existierende Datei wirklich überschreiben?");
+								int result = JOptionPane.showConfirmDialog(null, "Wollen Sie die existierende Datei wirklich überschreiben?", "Datei bereits vorhanden", JOptionPane.YES_NO_OPTION);
+								if(result == JOptionPane.YES_OPTION) {
+									lernkartei.exportiereEintraegeAlsCsv(new File(datei));
+									return;
+								}
+								if(result == JOptionPane.NO_OPTION) {
+									goBack = false;
+								}
+
+							}
+							lernkartei.exportiereEintraegeAlsCsv(new File(datei));
+							isValid = false;
+						}
+
+					}
+					catch (UngueltigeEingabeException e) {
+						JOptionPane.showMessageDialog(null, e.getMessage());
+					}
+					showMenu();
+				} while(isValid);
+				break;
+			case 6:
+			sc.close();
+			return;
 			}
 		}
 	}
 
+
 	private void showMenu() {
 		System.out.println(
 				"Lernkarten-App\n" + "1. Lernen! \n" + "2. Einzelantwortkarte hinzufuegen\n" + "3. Drucke alle Karten\n"
-						+ "4. Drucke Karten zu Kategorie\n" + "5. Beenden\n" + "Bitte Aktion waehlen:");
+						+ "4. Drucke Karten zu Kategorie\n" + "5. CSV-Export\n" + "6. Beenden\n" + "Bitte Aktion waehlen:");
 	}
 
 	private void warteAufEnter() {

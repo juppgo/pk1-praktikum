@@ -2,7 +2,7 @@ package pk.lkarten;
 
 import java.util.Arrays;
 
-public class MehrfachantwortKarte extends Lernkarte {
+public class MehrfachantwortKarte extends Lernkarte implements ValidierbareKarte, CsvExportable {
 
 	private String[] moeglicheAntworten;
 	private int[] richtigeAntworten;
@@ -49,6 +49,38 @@ public class MehrfachantwortKarte extends Lernkarte {
 			System.out.println(richtigeAntworten[i] + 1 + ": " + moeglicheAntworten[richtigeAntworten[i]]);
 		}
 		System.out.println();
+	}
+
+	public void validiere() throws UngueltigeKarteException {
+		String fehlerstring = "";
+		int counter = 0;
+		try {
+			super.validiere();
+		}
+		catch(UngueltigeKarteException exp) {
+			fehlerstring = exp.getMessage();
+			for(int i = 0; i < this.moeglicheAntworten.length; i++) {
+				if (this.moeglicheAntworten[i].isBlank()) {
+					counter++;
+				}
+			}
+			if(counter <= 2) {
+				fehlerstring += "Zu wenige moegliche Antworten gegeben.";
+			}
+			if(counter >= 2) {
+				return;
+			}
+			throw new UngueltigeKarteException(fehlerstring);
+		}
+	}
+
+	public String exportiereAlsCsv() {
+		String csv = "";
+		super.exportiereAlsCsv();
+		StringBuilder builder = new StringBuilder(Arrays.toString(moeglicheAntworten));
+		builder.append(",").append(Arrays.toString(richtigeAntworten));
+		csv += builder;
+		return csv;
 	}
 
 	@Override

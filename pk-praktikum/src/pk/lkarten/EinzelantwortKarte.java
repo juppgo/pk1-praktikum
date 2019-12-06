@@ -1,12 +1,16 @@
 package pk.lkarten;
 
-public class EinzelantwortKarte extends Lernkarte implements ValidierbareKarte {
+public class EinzelantwortKarte extends Lernkarte implements ValidierbareKarte, CsvExportable {
 
 	private String antwort;
 
 	public EinzelantwortKarte(String kategorie, String titel, String frage, String antwort) {
 		super(kategorie, titel, frage);
 		this.antwort = antwort;
+	}
+
+	public String getAntwort() {
+		return antwort;
 	}
 
 	public void zeigeVorderseite() {
@@ -17,7 +21,7 @@ public class EinzelantwortKarte extends Lernkarte implements ValidierbareKarte {
 	public void zeigeRueckseite() {
 		System.out.println(antwort);
 	}
-
+	
 	public void druckeKarte() {
 		zeigeVorderseite();
 		zeigeRueckseite();
@@ -28,23 +32,23 @@ public class EinzelantwortKarte extends Lernkarte implements ValidierbareKarte {
 		String fehlerstring = "";
 		try {
 			super.validiere();
-		} catch (UngueltigeKarteException exp) {
-			fehlerstring += exp.getMessage();
-			if (this.antwort.isBlank()) {
-				fehlerstring += "* Keine gueltige Antwort gegeben!\n";
+		}
+		catch(UngueltigeKarteException exp) {
+			fehlerstring+= exp.getMessage();
+			if(this.antwort.isBlank()) {
+				fehlerstring += "* Keine gültige Antwort gegeben!\n";
 			}
-			if (fehlerstring.isBlank()) {
+			if(fehlerstring.isBlank()) {
 				return;
-			}
-			throw new UngueltigeKarteException(fehlerstring);
+			}throw new UngueltigeKarteException(fehlerstring);
 		}
 	}
-	
-	public String expoertiereAlsCsv() {
-		String export = "";
-		
-		
-		return export;
+
+	public String exportiereAlsCsv() {
+		String csv = "";
+		csv = super.exportiereAlsCsv();
+		csv += "," + antwort +"\n";
+		return csv;
 	}
 
 	@Override
@@ -66,8 +70,7 @@ public class EinzelantwortKarte extends Lernkarte implements ValidierbareKarte {
 		EinzelantwortKarte other = (EinzelantwortKarte) obj;
 		if (antwort == null) {
 			return other.antwort == null;
-		} else
-			return antwort.equals(other.antwort);
+		} else return antwort.equals(other.antwort);
 	}
-
+	
 }

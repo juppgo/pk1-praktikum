@@ -1,6 +1,7 @@
 package pk.lkarten;
 
-public abstract class Lernkarte implements ValidierbareKarte {
+
+public abstract class Lernkarte implements ValidierbareKarte, CsvExportable {
 	private final int id;
 	private static int IDCOUNT = 1;
 	private String kategorie;
@@ -51,6 +52,10 @@ public abstract class Lernkarte implements ValidierbareKarte {
 			fehlerstring += "* Keinen gueltigen Titel angegeben!\n";
 		}
 		throw new UngueltigeKarteException(fehlerstring);
+	}
+
+	public String exportiereAlsCsv() {
+		return id + "," + kategorie + "," + titel + "," + frage;
 	}
 
 	@Override
