@@ -32,11 +32,11 @@ public class Menu {
 					i = Integer.parseInt(s);
 				} else
 					throw new UngueltigeZahlException("Keine valide Zahl");
-				if (i > 5 || i < 0) {
+				if (i > 6 || i < 0) {
 					throw new UngueltigeEingabeException("Fuer diese Zahl gibt es keinen Menueeintrag");
 				}
-			} catch (UngueltigeZahlException | UngueltigeEingabeException exp) {
-				System.err.println(exp.getMessage());
+			} catch (UngueltigeZahlException | UngueltigeEingabeException e) {
+				System.err.println(e.getMessage());
 				showMenu();
 				continue;
 			}
@@ -80,39 +80,38 @@ public class Menu {
 				showMenu();
 				break;
 			case 5:
-				boolean isValid = true;
+				String datei ="";
 				do {
 					try {
-						String datei = JOptionPane.showInputDialog(null, "Bitte geben Sie einen Dateinamen ein:");
+						datei = JOptionPane.showInputDialog(null, "Bitte geben Sie einen Dateinamen ein:");
+						if(datei == null) {
+							datei = "";
+							break;
+						}
 						if(datei.isBlank()) {
 							throw new UngueltigeEingabeException("Bitte geben Sie einen gültigen Dateinamen ein.");
 						}
-						if(!datei.isBlank()) {
-							String pathcheck = "/home/chris/pk1-praktikum/pk-praktikum/src/pk/lkarten/" + datei + ".csv";
-							Path path = Paths.get(pathcheck);
-							boolean goBack = true;
-							while(Files.exists(path) && goBack) {
-								//throw new DateiBereitsVorhandenException("Wollen Sie die existierende Datei wirklich überschreiben?");
-								int result = JOptionPane.showConfirmDialog(null, "Wollen Sie die existierende Datei wirklich überschreiben?", "Datei bereits vorhanden", JOptionPane.YES_NO_OPTION);
-								if(result == JOptionPane.YES_OPTION) {
-									lernkartei.exportiereEintraegeAlsCsv(new File(datei));
-									return;
-								}
-								if(result == JOptionPane.NO_OPTION) {
-									goBack = false;
-								}
-
-							}
-							lernkartei.exportiereEintraegeAlsCsv(new File(datei));
-							isValid = false;
+						String pathcheck = "/home/chris/pk1-praktikum/pk-praktikum/src/pk/lkarten/" + datei + ".csv";
+						Path path = Paths.get(pathcheck);
+						if(Files.exists(path)) {
+							throw new DateiBereitsVorhandenException("Wollen Sie die existierende Datei wirklich überschreiben?");
 						}
-
 					}
 					catch (UngueltigeEingabeException e) {
 						JOptionPane.showMessageDialog(null, e.getMessage());
 					}
-					showMenu();
-				} while(isValid);
+					catch (DateiBereitsVorhandenException e) {
+						int result = JOptionPane.showConfirmDialog(null, e.getMessage(), "Datei bereits vorhanden", JOptionPane.YES_NO_OPTION);
+						if(result == JOptionPane.NO_OPTION) {
+							datei ="";
+						}
+						else {
+							exportiere(datei);
+						}
+					}
+				} while(datei.isBlank());
+				exportiere(datei);
+				showMenu();
 				break;
 			case 6:
 			sc.close();
@@ -121,6 +120,9 @@ public class Menu {
 		}
 	}
 
+	private void exportiere(String datei) {
+		lernkartei.exportiereEintraegeAlsCsv(new File(datei));
+	}
 
 	private void showMenu() {
 		System.out.println(

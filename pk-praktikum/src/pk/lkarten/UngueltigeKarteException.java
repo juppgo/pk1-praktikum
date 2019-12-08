@@ -1,7 +1,6 @@
 package pk.lkarten;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class UngueltigeKarteException extends Exception {
 

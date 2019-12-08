@@ -45,10 +45,7 @@ public class EinzelantwortKarte extends Lernkarte implements ValidierbareKarte, 
 	}
 
 	public String exportiereAlsCsv() {
-		String csv = "";
-		csv = super.exportiereAlsCsv();
-		csv += "," + antwort +"\n";
-		return csv;
+		return (super.exportiereAlsCsv() + "," + antwort + "\n");
 	}
 
 	@Override

@@ -41,7 +41,7 @@ public class Lernkartei {
 	}
 
 	public HashSet<Lernkarte> gibKartenZuKategorie(String kategorie) {
-		HashSet<Lernkarte> arrayListKategorie = new HashSet<Lernkarte>();
+		HashSet<Lernkarte> arrayListKategorie = new HashSet<>();
 		for(Lernkarte lernkarte: karten) {
 			if(lernkarte.getKategorie().equals(kategorie)) {
 				arrayListKategorie.add(lernkarte);
@@ -66,17 +66,16 @@ public class Lernkartei {
 	}
 
 	public void exportiereEintraegeAlsCsv(File datei) {
-		String csv = "";
+		StringBuilder csv = new StringBuilder();
 		for(Lernkarte lernkarten: karten) {
-			csv += lernkarten.exportiereAlsCsv();
+			csv.append(lernkarten.exportiereAlsCsv());
 		}
 
-		//Dateiname korrekt einbinden
-		String path= "/home/chris/pk1-praktikum/pk-praktikum/src/pk/lkarten/" + datei + ".csv";
+		String path = "/home/chris/pk1-praktikum/pk-praktikum/src/pk/lkarten/" + datei + ".csv";
 		Path filePath = Paths.get(path);
 
 		try {
-			Files.writeString(filePath, csv);
+			Files.writeString(filePath, csv.toString());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
