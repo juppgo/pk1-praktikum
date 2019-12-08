@@ -94,5 +94,4 @@ public abstract class Lernkarte implements ValidierbareKarte, CsvExportable {
 		} else
 			return titel.equals(other.titel);
 	}
-
 }

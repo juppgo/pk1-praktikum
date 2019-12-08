@@ -70,10 +70,8 @@ public class Lernkartei {
 		for(Lernkarte lernkarten: karten) {
 			csv.append(lernkarten.exportiereAlsCsv());
 		}
-
 		String path = "/home/chris/pk1-praktikum/pk-praktikum/src/pk/lkarten/" + datei + ".csv";
 		Path filePath = Paths.get(path);
-
 		try {
 			Files.writeString(filePath, csv.toString());
 		} catch (IOException e) {
