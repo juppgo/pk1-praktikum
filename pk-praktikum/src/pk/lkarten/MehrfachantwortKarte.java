@@ -75,12 +75,7 @@ public class MehrfachantwortKarte extends Lernkarte implements ValidierbareKarte
 	}
 
 	public String exportiereAlsCsv() {
-		String csv = "";
-		super.exportiereAlsCsv();
-		StringBuilder builder = new StringBuilder(Arrays.toString(moeglicheAntworten));
-		builder.append(",").append(Arrays.toString(richtigeAntworten));
-		csv += builder;
-		return csv;
+		return (super.exportiereAlsCsv() +","+ Arrays.toString(moeglicheAntworten) + "," + Arrays.toString(richtigeAntworten));
 	}
 
 	@Override

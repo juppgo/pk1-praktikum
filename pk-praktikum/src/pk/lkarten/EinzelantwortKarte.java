@@ -9,9 +9,9 @@ public class EinzelantwortKarte extends Lernkarte implements ValidierbareKarte, 
 		this.antwort = antwort;
 	}
 
-	public String getAntwort() {
-		return antwort;
-	}
+//	public String getAntwort() {
+//		return antwort;
+//	}
 
 	public void zeigeVorderseite() {
 		System.out.println("[" + super.getId() + ", " + super.getKategorie() + " ] " + super.getTitel() + ":" + "\n"
