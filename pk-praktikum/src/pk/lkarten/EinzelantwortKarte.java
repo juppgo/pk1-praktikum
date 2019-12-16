@@ -1,5 +1,9 @@
 package pk.lkarten;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+
 public class EinzelantwortKarte extends Lernkarte implements ValidierbareKarte, CsvExportable {
 
 	private String antwort;
@@ -13,19 +17,19 @@ public class EinzelantwortKarte extends Lernkarte implements ValidierbareKarte, 
 //		return antwort;
 //	}
 
-	public void zeigeVorderseite() {
-		System.out.println("[" + super.getId() + ", " + super.getKategorie() + " ] " + super.getTitel() + ":" + "\n"
-				+ super.getFrage());
+	public void zeigeVorderseite(OutputStream stream) throws IOException {
+		String vorderseite = ("[" + super.getId() + ", " + super.getKategorie() + " ] " + super.getTitel() + ":" + "\n"
+				+ super.getFrage() + "\n");
+		OutputStreamWriter sw = new OutputStreamWriter(stream);
+		sw.write(vorderseite.toCharArray());
+		sw.flush();
 	}
 
-	public void zeigeRueckseite() {
-		System.out.println(antwort);
-	}
-	
-	public void druckeKarte() {
-		zeigeVorderseite();
-		zeigeRueckseite();
-		System.out.println();
+	public void zeigeRueckseite(OutputStream stream) throws IOException {
+		String rueckseite = antwort + "\n";
+		OutputStreamWriter sw = new OutputStreamWriter(stream);
+		sw.write(rueckseite.toCharArray());
+		sw.flush();
 	}
 
 	public void validiere() throws UngueltigeKarteException {

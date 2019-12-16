@@ -23,14 +23,14 @@ public class LernkarteiArray {
 			System.out.println("Fehlermeldung: Das Array ist voll!");
 		}
 	}
-
-	public void druckeAlleKarten() {
+//Auskommontiert, da sonst Compilerfehler durch Stream
+	/*public void druckeAlleKarten() {
 		for (int i = 0; i < karten.length; i++) {
 			if (karten[i] != null) {
 				karten[i].druckeKarte();
 			}
 		}
-	}
+	}*/
 
 	public int gibAnzahlKarten() {
 		int sum = 0;
