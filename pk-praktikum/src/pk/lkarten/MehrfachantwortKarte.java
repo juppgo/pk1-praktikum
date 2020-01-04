@@ -3,13 +3,15 @@ package pk.lkarten;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class MehrfachantwortKarte extends Lernkarte implements ValidierbareKarte, CsvExportable {
+public class MehrfachantwortKarte extends Lernkarte implements ValidierbareKarte, CsvExportable, Serializable {
 
     boolean mehrereAntworten;
     private String[] moeglicheAntworten;
     private int[] richtigeAntworten;
+    private static final long serialVersionUID = -2953423290824019453L;
 
     public MehrfachantwortKarte(String kategorie, String titel, String frage, String[] moeglicheAntworten,
                                 int[] richtigeAntworten) {

@@ -3,18 +3,17 @@ package pk.lkarten;
 //import java.util.ArrayList;
 //import java.util.ListIterator;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
-public class Lernkartei {
+public class Lernkartei implements Serializable {
 
 
     private HashSet<Lernkarte> karten;
+    private static final long serialVersionUID = -3549468280101226180L;
 
     public Lernkartei() {
         this.karten = new HashSet<>();
@@ -87,6 +86,31 @@ public class Lernkartei {
         try {
             Files.writeString(filePath, csv.toString());
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void speichern() {
+        ArrayList erg = new ArrayList<>();
+        File file = new File("serialisierung.ser");
+        try (FileOutputStream fos = new FileOutputStream(file);
+             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+            oos.writeObject(karten);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void laden() {
+        File file = new File("serialisierung.ser");
+        try (FileInputStream fis = new FileInputStream(file);
+             ObjectInputStream ois = new ObjectInputStream(fis)) {
+            karten = (HashSet<Lernkarte>) ois.readObject();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

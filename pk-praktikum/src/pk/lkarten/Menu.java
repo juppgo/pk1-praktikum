@@ -17,10 +17,10 @@ public class Menu {
     public void liesEingabe() throws UngueltigeEingabeException, UngueltigeZahlException, UngueltigeKarteException, DateiBereitsVorhandenException, IOException {
         // Anlegen einer Einzelantwortkarte, sowie Ausgabe der
         // gibAnzahlKarten()-Methode, um alle Methoden der Lernkartei aufzurufen
-        lernkartei.hinzufuegen(new EinzelantwortKarte("Kategorie 01", "Titel 01", "Frage 01", "Antwort 01"));
-        lernkartei.hinzufuegen(new EinzelantwortKarte("Kategorie 02", "Titel 02", "Frage 02", "Antwort 02"));
-        lernkartei.hinzufuegen(new EinzelantwortKarte("Kategorie 03", "Titel 03", "Frage 03", "Antwort 03"));
-        lernkartei.hinzufuegen(new EinzelantwortKarte("Kategorie 04", "Titel 04", "Frage 04", "Antwort 04"));
+//        lernkartei.hinzufuegen(new EinzelantwortKarte("Kategorie 01", "Titel 01", "Frage 01", "Antwort 01"));
+//        lernkartei.hinzufuegen(new EinzelantwortKarte("Kategorie 02", "Titel 02", "Frage 02", "Antwort 02"));
+//        lernkartei.hinzufuegen(new EinzelantwortKarte("Kategorie 03", "Titel 03", "Frage 03", "Antwort 03"));
+//        lernkartei.hinzufuegen(new EinzelantwortKarte("Kategorie 04", "Titel 04", "Frage 04", "Antwort 04"));
         System.out.println("Test der Klasse gibAnzahlKarten()");
         System.out.println(lernkartei.gibAnzahlKarten() + "\n");
         showMenu();
@@ -32,7 +32,7 @@ public class Menu {
                     i = Integer.parseInt(s);
                 } else
                     throw new UngueltigeZahlException("Keine valide Zahl");
-                if (i > 6 || i < 0) {
+                if (i > 8 || i < 0) {
                     throw new UngueltigeEingabeException("Fuer diese Zahl gibt es keinen Menueeintrag");
                 }
             } catch (UngueltigeZahlException | UngueltigeEingabeException e) {
@@ -111,6 +111,14 @@ public class Menu {
                     showMenu();
                     break;
                 case 6:
+                    lernkartei.laden();
+                    showMenu();
+                    break;
+                case 7:
+                    lernkartei.speichern();
+                    showMenu();
+                    break;
+                case 8:
                     sc.close();
                     return;
             }
@@ -124,7 +132,7 @@ public class Menu {
     private void showMenu() {
         System.out.println(
                 "Lernkarten-App\n" + "1. Lernen! \n" + "2. Einzelantwortkarte hinzufuegen\n" + "3. Drucke alle Karten\n"
-                        + "4. Drucke Karten zu Kategorie\n" + "5. CSV-Export\n" + "6. Beenden\n" + "Bitte Aktion waehlen:");
+                        + "4. Drucke Karten zu Kategorie\n" + "5. CSV-Export\n" + "6. Lade aus Datei\n" + "7. Speichere in Datei\n" + "8. Beenden\n" + "Bitte Aktion waehlen:");
     }
 
     private void warteAufEnter() {

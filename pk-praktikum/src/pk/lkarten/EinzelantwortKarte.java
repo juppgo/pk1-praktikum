@@ -3,10 +3,12 @@ package pk.lkarten;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Serializable;
 
-public class EinzelantwortKarte extends Lernkarte implements ValidierbareKarte, CsvExportable {
+public class EinzelantwortKarte extends Lernkarte implements ValidierbareKarte, CsvExportable, Serializable {
 
 	private String antwort;
+	private static final long serialVersionUID = 2074366230277156847L;
 
 	public EinzelantwortKarte(String kategorie, String titel, String frage, String antwort) {
 		super(kategorie, titel, frage);

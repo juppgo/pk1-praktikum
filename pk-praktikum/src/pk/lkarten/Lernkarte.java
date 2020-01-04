@@ -3,10 +3,12 @@ package pk.lkarten;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.Serializable;
 
-public abstract class Lernkarte implements ValidierbareKarte, CsvExportable {
+public abstract class Lernkarte implements ValidierbareKarte, CsvExportable, Serializable {
     private final int id;
     private static int IDCOUNT = 1;
+    private static final long serialVersionUID = 5578113336158101987L;
     private String kategorie;
     private String titel;
     private String frage;
