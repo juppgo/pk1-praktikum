@@ -15,9 +15,9 @@ public class EinzelantwortKarte extends Lernkarte implements ValidierbareKarte, 
 		this.antwort = antwort;
 	}
 
-//	public String getAntwort() {
-//		return antwort;
-//	}
+	public String getAntwort() {
+		return antwort;
+	}
 
 	public void zeigeVorderseite(OutputStream stream) throws IOException {
 		String vorderseite = ("[" + super.getId() + ", " + super.getKategorie() + " ] " + super.getTitel() + ":" + "\n"
@@ -75,5 +75,6 @@ public class EinzelantwortKarte extends Lernkarte implements ValidierbareKarte, 
 			return other.antwort == null;
 		} else return antwort.equals(other.antwort);
 	}
-	
+
+
 }
