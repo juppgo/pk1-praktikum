@@ -13,7 +13,7 @@ import pk.lkarten.Lernkarte;
 
 public abstract class ErfassungView extends Stage {
 
-//	private Lernkarte karte;
+	private Lernkarte karte;
 
 	protected GridPane gp;
 	protected TextField tfKategorie;
