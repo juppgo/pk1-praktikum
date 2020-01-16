@@ -134,5 +134,6 @@ public class MehrfachantwortKarteErfassungView extends ErfassungView {
         Scene mehrfachkarte = new Scene(gp);
         setScene(mehrfachkarte);
         show();
+
     }
 }
