@@ -22,7 +22,6 @@ public class Lernkartei implements Serializable {
     public void hinzufuegen(Lernkarte karte) throws UngueltigeKarteException {
         karte.validiere();
         karten.add(karte);
-
     }
 
     public void druckeAlleKarten() throws IOException {
@@ -113,5 +112,13 @@ public class Lernkartei implements Serializable {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public Iterator<Lernkarte> getIterator() {
+        Iterator iterator = karten.iterator();
+        while(iterator.hasNext()) {
+            iterator.next();
+        }
+        return iterator;
     }
 }

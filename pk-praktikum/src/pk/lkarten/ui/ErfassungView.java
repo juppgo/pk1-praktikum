@@ -40,7 +40,7 @@ public abstract class ErfassungView extends Stage {
 		gp = new GridPane();
 		confirm = new Button("Ok");
 		cancel = new Button("Abbrechen");
-		HBox controls = new HBox();
+		controls = new HBox();
 		controls.setPadding(new Insets(10,15,10,15));
 		controls.setSpacing(10);
 		controls.getChildren().addAll(confirm,cancel);

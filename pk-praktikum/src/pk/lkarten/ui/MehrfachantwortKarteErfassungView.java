@@ -131,6 +131,9 @@ public class MehrfachantwortKarteErfassungView extends ErfassungView {
         gp.add(cbAntwort03, 2, 5);
         gp.add(cbAntwort04, 2, 6);
         gp.add(cbAntwort05, 2, 7);
+
+        gp.add(controls, 1,8);
+
         Scene mehrfachkarte = new Scene(gp);
         setScene(mehrfachkarte);
         show();

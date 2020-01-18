@@ -38,7 +38,11 @@ public abstract class Lernkarte implements ValidierbareKarte, CsvExportable, Ser
 
     public abstract void zeigeVorderseite(OutputStream stream) throws IOException;
 
+    public abstract String zeigeVorderseite();
+
     public abstract void zeigeRueckseite(OutputStream stream) throws IOException;
+
+    public abstract String zeigeRueckseite();
 
     public void druckeKarte() throws IOException {
         zeigeVorderseite(System.out);
@@ -98,5 +102,10 @@ public abstract class Lernkarte implements ValidierbareKarte, CsvExportable, Ser
             return other.titel == null;
         } else
             return titel.equals(other.titel);
+    }
+
+    @Override
+    public String toString() {
+        return "Lernkarte [ id=" + getId() + ", kategorie=" + getKategorie() + ", titel=" + getTitel() + ", frage=" + getFrage();
     }
 }

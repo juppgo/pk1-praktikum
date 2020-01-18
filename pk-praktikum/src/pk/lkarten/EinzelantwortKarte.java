@@ -15,6 +15,11 @@ public class EinzelantwortKarte extends Lernkarte implements ValidierbareKarte, 
 		this.antwort = antwort;
 	}
 
+	@Override
+	public String toString() {
+		return super.toString() + ", antwort=" + getAntwort() + "]";
+	}
+
 	public String getAntwort() {
 		return antwort;
 	}
@@ -27,11 +32,24 @@ public class EinzelantwortKarte extends Lernkarte implements ValidierbareKarte, 
 		sw.flush();
 	}
 
+	@Override
+	public String zeigeVorderseite() {
+		String vorderseite = ("[" + super.getId() + ", " + super.getKategorie() + " ] " + super.getTitel() + ":" + "\n"
+				+ super.getFrage());
+		return vorderseite;
+	}
+
 	public void zeigeRueckseite(OutputStream stream) throws IOException {
 		String rueckseite = antwort + "\n";
 		OutputStreamWriter sw = new OutputStreamWriter(stream);
 		sw.write(rueckseite.toCharArray());
 		sw.flush();
+	}
+
+	@Override
+	public String zeigeRueckseite() {
+		String rueckseite = antwort + "]";
+		return rueckseite;
 	}
 
 	public void validiere() throws UngueltigeKarteException {

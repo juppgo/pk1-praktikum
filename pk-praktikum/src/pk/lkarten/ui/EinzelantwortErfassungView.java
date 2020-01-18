@@ -26,7 +26,7 @@ public class EinzelantwortErfassungView extends ErfassungView {
 		Label labelAntwort = new Label("Antwort: ");
 		gp.add(labelAntwort, 0, 3);
 		gp.add(taAntwort, 1,3,1,1);
-//		gp.add(controls, 1,4);
+		gp.add(controls, 1,4);
 		Scene einzelantwortkarte = new Scene(gp);
 		setScene(einzelantwortkarte);
 		show();

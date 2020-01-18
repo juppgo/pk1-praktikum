@@ -38,6 +38,11 @@ public class MehrfachantwortKarte extends Lernkarte implements ValidierbareKarte
         }
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + ", moeglicheAntworten=" + Arrays.toString(getMoeglicheAntworten()) + ", richtigeAntworten=" + Arrays.toString(getRichtigeAntworten()) + "]";
+    }
+
     public void zeigeVorderseite(OutputStream stream) throws IOException {
         String vorderseite = ("[" + super.getId() + ", " + super.getKategorie() + " ] " + super.getTitel() + ":" + "\n"
                 + super.getFrage() + "\n");
@@ -51,6 +56,18 @@ public class MehrfachantwortKarte extends Lernkarte implements ValidierbareKarte
         sw.flush();
     }
 
+    public String zeigeVorderseite() {
+        String vorderseite = ("[" + super.getId() + ", " + super.getKategorie() + " ] " + super.getTitel() + ":" + "\n"
+                + super.getFrage());
+        int counter = 1;
+        String antworten = "";
+        for (int i = 0; i < moeglicheAntworten.length; i++) {
+            antworten += counter + ": " + moeglicheAntworten[i];
+        }
+        // TODO Test der Array-To-String Methode als Alternative
+        return vorderseite + antworten;
+    }
+
     public void zeigeRueckseite(OutputStream stream) throws IOException {
         OutputStreamWriter sw = new OutputStreamWriter(stream);
         String satz = ("Die richtigen Antworten sind:\n");
@@ -59,6 +76,14 @@ public class MehrfachantwortKarte extends Lernkarte implements ValidierbareKarte
             sw.write(richtigeAntworten[i] + 1 + ": " + moeglicheAntworten[richtigeAntworten[i]] + "\n");
         }
         sw.flush();
+    }
+
+    public String zeigeRueckseite() {
+        String rueckseite = "";
+        for(int i = 0; i < richtigeAntworten.length; i++) {
+            rueckseite = richtigeAntworten[i]+1 + ": " + moeglicheAntworten[richtigeAntworten[i]];
+        }
+        return rueckseite;
     }
 
     public void validiere() throws UngueltigeKarteException {
