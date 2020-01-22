@@ -2,23 +2,32 @@ package pk.lkarten.ui;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Menu;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import pk.lkarten.*;
 
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 public class LernkartenApp extends Application {
 
@@ -65,8 +74,6 @@ public class LernkartenApp extends Application {
 		MenuItem einzelkarte = new MenuItem("Einzelantwortkarte hinzufügen");
 		MenuItem mehrfachkarte = new MenuItem("Mehrfachantwortkarte hinzufügen");
 
-
-
 		mDatei.getItems().addAll(laden, speichern, new SeparatorMenuItem(), csv, new SeparatorMenuItem(), beenden);
 		mLernkartei.getItems().addAll(einzelkarte, mehrfachkarte);
 
@@ -74,14 +81,23 @@ public class LernkartenApp extends Application {
 		menuBar.getMenus().add(mLernkartei);
 
 		//Hauptfenster
-		//TODO Einbinden der Objekte in die List-View
 		ListView<String> listView = new ListView<>();
-//		for (String i: lernkarte) {
-//			listView.getItems().add(i);
-//		}
+		ObservableList<Lernkarte> observableList = FXCollections.observableArrayList();
+
+		Button learn = new Button("Lernen!");
+		Spinner<Integer> spinner = new Spinner<>();
+		SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(5,15);
+		spinner.setValueFactory(valueFactory);
+		HBox bottom = new HBox();
+		bottom.setPadding(new Insets(10,15,10,15));
+		bottom.setSpacing(10);
+		bottom.getChildren().addAll(learn,spinner);
 
 		BorderPane bp = new BorderPane(listView);
 		bp.setTop(menuBar);
+		bp.setBottom(bottom);
+
+
 
 		Scene scene = new Scene(bp, 500.0, 500.0);
 		primaryStage.setScene(scene);
@@ -93,6 +109,28 @@ public class LernkartenApp extends Application {
 			@Override
 			public void handle(ActionEvent actionEvent) {
 				lernkartei.laden();
+				observableList.addListener(new ListChangeListener<Lernkarte>() {
+					@Override
+					public void onChanged(Change<? extends Lernkarte> change) {
+						while(change.next()) {
+							if(change.wasAdded()) {
+								List<? extends Lernkarte> sublist = change.getAddedSubList();
+								for (Lernkarte a: sublist) {
+									listView.getItems().add(a.toString());
+								}
+							}
+						}
+					}
+				});
+				// TODO Hashset in listView schreiben. Vll mit Iterator?
+//				for (lernkartei l: karten) {
+//					listView.getItems().add((String)lernkartei.getKarten());
+//				}
+//				while(lernkartei.getIterator() != null) {
+//					listView.getItems().add(lernkartei.getIterator().toString());
+//				}
+
+
 			}
 		});
 
@@ -143,13 +181,12 @@ public class LernkartenApp extends Application {
 					e.printStackTrace();
 				}
 			}
-		}) ;
+		});
 
 		beenden.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
 				Platform.exit();
-				System.exit(0);
 			}
 		});
 
@@ -159,6 +196,30 @@ public class LernkartenApp extends Application {
 				EinzelantwortErfassungView eview = new EinzelantwortErfassungView(primaryStage, null);
 				eview.setTitle("Erfassung einer Einzelantwortkarte");
 				eview.showView();
+				eview.confirm.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent actionEvent) {
+						String kategorie = eview.tfKategorie.getText();
+						String titel = eview.tfTitel.getText();
+						String frage = eview.tfFrage.getText();
+						String antwort = eview.taAntwort.getText();
+						try {
+							EinzelantwortKarte karte = new EinzelantwortKarte(kategorie, titel, frage, antwort);
+							lernkartei.hinzufuegen(karte);
+							listView.getItems().add(karte.toString());
+							eview.close();
+						} catch (UngueltigeKarteException e) {
+							//TODO Exception entsprechend der Klasse Menü implementieren
+							DialogUtil.showMessageDialog("Ungueltige Eingabe", e.getFehlerAusgabe());
+						}
+					}
+				});
+				eview.cancel.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent actionEvent) {
+						eview.close();
+					}
+				});
 			}
 		});
 
@@ -168,7 +229,54 @@ public class LernkartenApp extends Application {
 				MehrfachantwortKarteErfassungView mview = new MehrfachantwortKarteErfassungView(primaryStage, null);
 				mview.setTitle("Erfassung einer Mehrfachantwortkarte");
 				mview.showView();
-
+				mview.confirm.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent actionEvent) {
+						String kategorie = mview.tfKategorie.getText();
+						String titel = mview.tfTitel.getText();
+						String frage = mview.tfFrage.getText();
+						String antwort01 = mview.taAntwort01.getText();
+						String antwort02 = mview.taAntwort02.getText();
+						String antwort03 = mview.taAntwort03.getText();
+						String antwort04 = mview.taAntwort04.getText();
+						String antwort05 = mview.taAntwort05.getText();
+						String[] moeglicheantworten = {antwort01,antwort02,antwort03,antwort04,antwort05};
+						ArrayList<Integer> hilfsArray = new ArrayList<>();
+						if(mview.cbAntwort01.isSelected()) {
+							hilfsArray.add(0);
+						}
+						if(mview.cbAntwort02.isSelected()) {
+							hilfsArray.add(1);
+						}
+						if(mview.cbAntwort03.isSelected()) {
+							hilfsArray.add(2);
+						}
+						if(mview.cbAntwort04.isSelected()) {
+							hilfsArray.add(3);
+						}
+						if(mview.cbAntwort05.isSelected()) {
+							hilfsArray.add(4);
+						}
+						int[] richtigeAntworten = new int[hilfsArray.size()];
+						for(int i = 0; i < richtigeAntworten.length; i++) {
+							richtigeAntworten[i] = hilfsArray.get(i);
+						}
+						try {
+							MehrfachantwortKarte karte = new MehrfachantwortKarte(kategorie,titel,frage,moeglicheantworten,richtigeAntworten);
+							lernkartei.hinzufuegen(karte);
+							listView.getItems().add(karte.toString());
+							mview.close();
+						} catch (UngueltigeKarteException e) {
+							DialogUtil.showMessageDialog("Ungueltige Eingabe", e.getFehlerAusgabe());
+						}
+					}
+				});
+				mview.cancel.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent actionEvent) {
+						mview.close();
+					}
+				});
 			}
 		});
 	}

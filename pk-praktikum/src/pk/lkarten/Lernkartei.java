@@ -15,6 +15,10 @@ public class Lernkartei implements Serializable {
     private HashSet<Lernkarte> karten;
     private static final long serialVersionUID = -3549468280101226180L;
 
+//    public HashSet<Lernkarte> getKarten() {
+//        return karten;
+//    }
+
     public Lernkartei() {
         this.karten = new HashSet<>();
     }
@@ -116,9 +120,9 @@ public class Lernkartei implements Serializable {
 
     public Iterator<Lernkarte> getIterator() {
         Iterator iterator = karten.iterator();
-        while(iterator.hasNext()) {
-            iterator.next();
-        }
+//        while(iterator.hasNext()) {
+//            iterator.next();
+//        }
         return iterator;
     }
 }

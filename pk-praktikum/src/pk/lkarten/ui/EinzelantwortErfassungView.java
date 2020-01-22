@@ -9,7 +9,7 @@ import pk.lkarten.EinzelantwortKarte;
 public class EinzelantwortErfassungView extends ErfassungView {
 
 	private EinzelantwortKarte karte;
-	private TextArea taAntwort;
+	protected TextArea taAntwort;
 
 	public EinzelantwortErfassungView(Stage primaryStage, EinzelantwortKarte karte) {
 		super(primaryStage, karte);
