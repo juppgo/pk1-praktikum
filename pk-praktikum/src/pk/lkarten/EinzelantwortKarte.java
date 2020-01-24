@@ -24,6 +24,16 @@ public class EinzelantwortKarte extends Lernkarte implements ValidierbareKarte, 
 		return antwort;
 	}
 
+	@Override
+	public String getAntwortRueckseiteDialog() {
+		return getAntwort();
+	}
+
+	@Override
+	public String getAntwortVorderseiteDialog() {
+		return getAntwort();
+	}
+
 	public void zeigeVorderseite(OutputStream stream) throws IOException {
 		String vorderseite = ("[" + super.getId() + ", " + super.getKategorie() + " ] " + super.getTitel() + ":" + "\n"
 				+ super.getFrage() + "\n");
@@ -34,9 +44,8 @@ public class EinzelantwortKarte extends Lernkarte implements ValidierbareKarte, 
 
 	@Override
 	public String zeigeVorderseite() {
-		String vorderseite = ("[" + super.getId() + ", " + super.getKategorie() + " ] " + super.getTitel() + ":" + "\n"
+		return ("[" + super.getId() + ", " + super.getKategorie() + " ] " + super.getTitel() + ":" + "\n"
 				+ super.getFrage());
-		return vorderseite;
 	}
 
 	public void zeigeRueckseite(OutputStream stream) throws IOException {
@@ -48,8 +57,7 @@ public class EinzelantwortKarte extends Lernkarte implements ValidierbareKarte, 
 
 	@Override
 	public String zeigeRueckseite() {
-		String rueckseite = antwort + "]";
-		return rueckseite;
+		return antwort + "]";
 	}
 
 	public void validiere() throws UngueltigeKarteException {

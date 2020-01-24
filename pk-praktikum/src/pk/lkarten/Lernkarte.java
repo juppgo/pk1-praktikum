@@ -36,6 +36,10 @@ public abstract class Lernkarte implements ValidierbareKarte, CsvExportable, Ser
         return id;
     }
 
+    public abstract String getAntwortRueckseiteDialog();
+
+    public abstract String getAntwortVorderseiteDialog();
+
     public abstract void zeigeVorderseite(OutputStream stream) throws IOException;
 
     public abstract String zeigeVorderseite();
@@ -108,4 +112,6 @@ public abstract class Lernkarte implements ValidierbareKarte, CsvExportable, Ser
     public String toString() {
         return "Lernkarte [ id=" + getId() + ", kategorie=" + getKategorie() + ", titel=" + getTitel() + ", frage=" + getFrage();
     }
+
+
 }

@@ -11,23 +11,22 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Menu;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import pk.lkarten.*;
 
-import javax.swing.*;
+
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Iterator;
+
 import java.util.List;
-import java.util.Set;
+
 
 public class LernkartenApp extends Application {
 
@@ -39,7 +38,7 @@ public class LernkartenApp extends Application {
 	}
 
 	@Override
-	public void start(Stage primaryStage) throws UngueltigeEingabeException, UngueltigeZahlException, UngueltigeKarteException, DateiBereitsVorhandenException, IOException {
+	public void start(Stage primaryStage) {
 //		EinzelantwortKarte e1 = new EinzelantwortKarte("Kategorie 01", "Titel 01", "Frage 01", "Antwort 01");
 //		EinzelantwortErfassungView eview1 = new EinzelantwortErfassungView(primaryStage, e1);
 //		eview1.setTitle("Erfassung einer Einzelantwortkarte");
@@ -82,7 +81,7 @@ public class LernkartenApp extends Application {
 
 		//Hauptfenster
 		ListView<String> listView = new ListView<>();
-		ObservableList<Lernkarte> observableList = FXCollections.observableArrayList();
+		ObservableList<String> observableList = FXCollections.observableArrayList();
 
 		Button learn = new Button("Lernen!");
 		Spinner<Integer> spinner = new Spinner<>();
@@ -105,17 +104,17 @@ public class LernkartenApp extends Application {
 		primaryStage.show();
 
 		// Event Handling
-		laden.setOnAction(new EventHandler<ActionEvent>() {
+		laden.setOnAction(new EventHandler<>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
 				lernkartei.laden();
-				observableList.addListener(new ListChangeListener<Lernkarte>() {
+				observableList.addListener(new ListChangeListener<>() {
 					@Override
 					public void onChanged(Change<? extends Lernkarte> change) {
-						while(change.next()) {
-							if(change.wasAdded()) {
+						while (change.next()) {
+							if (change.wasAdded()) {
 								List<? extends Lernkarte> sublist = change.getAddedSubList();
-								for (Lernkarte a: sublist) {
+								for (Lernkarte a : sublist) {
 									listView.getItems().add(a.toString());
 								}
 							}
@@ -134,16 +133,16 @@ public class LernkartenApp extends Application {
 			}
 		});
 
-		speichern.setOnAction(new EventHandler<ActionEvent>() {
+		speichern.setOnAction(new EventHandler<>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
 				lernkartei.speichern();
 			}
 		});
 
-		csv.setOnAction(new EventHandler<ActionEvent>() {
+		csv.setOnAction(new EventHandler<>() {
 			@Override
-			public void handle(ActionEvent actionEvent)  {
+			public void handle(ActionEvent actionEvent) {
 				String datei = "";
 				do {
 					try {
@@ -163,15 +162,16 @@ public class LernkartenApp extends Application {
 					} catch (UngueltigeEingabeException e) {
 						DialogUtil.showMessageDialog(null, e.getMessage());
 					} catch (DateiBereitsVorhandenException e) {
+						DialogUtil.showConfirmDialog("Datei bereits vorhanden", e.getMessage());
 						boolean result = DialogUtil.showConfirmDialog("Datei bereits vorhanden.", e.getMessage());
-						if (result == false) {
-							datei = "";
-						} else {
+						if (result) {
 							try {
 								exportiere(datei);
 							} catch (IOException ex) {
 								ex.printStackTrace();
 							}
+						} else {
+							datei = "";
 						}
 					}
 				} while (datei.isBlank());
@@ -183,20 +183,20 @@ public class LernkartenApp extends Application {
 			}
 		});
 
-		beenden.setOnAction(new EventHandler<ActionEvent>() {
+		beenden.setOnAction(new EventHandler<>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
 				Platform.exit();
 			}
 		});
 
-		einzelkarte.setOnAction(new EventHandler<ActionEvent>() {
+		einzelkarte.setOnAction(new EventHandler<>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
 				EinzelantwortErfassungView eview = new EinzelantwortErfassungView(primaryStage, null);
 				eview.setTitle("Erfassung einer Einzelantwortkarte");
 				eview.showView();
-				eview.confirm.setOnAction(new EventHandler<ActionEvent>() {
+				eview.confirm.setOnAction(new EventHandler<>() {
 					@Override
 					public void handle(ActionEvent actionEvent) {
 						String kategorie = eview.tfKategorie.getText();
@@ -209,12 +209,12 @@ public class LernkartenApp extends Application {
 							listView.getItems().add(karte.toString());
 							eview.close();
 						} catch (UngueltigeKarteException e) {
-							//TODO Exception entsprechend der Klasse Menü implementieren
+
 							DialogUtil.showMessageDialog("Ungueltige Eingabe", e.getFehlerAusgabe());
 						}
 					}
 				});
-				eview.cancel.setOnAction(new EventHandler<ActionEvent>() {
+				eview.cancel.setOnAction(new EventHandler<>() {
 					@Override
 					public void handle(ActionEvent actionEvent) {
 						eview.close();
@@ -223,13 +223,13 @@ public class LernkartenApp extends Application {
 			}
 		});
 
-		mehrfachkarte.setOnAction(new EventHandler<ActionEvent>() {
+		mehrfachkarte.setOnAction(new EventHandler<>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
 				MehrfachantwortKarteErfassungView mview = new MehrfachantwortKarteErfassungView(primaryStage, null);
 				mview.setTitle("Erfassung einer Mehrfachantwortkarte");
 				mview.showView();
-				mview.confirm.setOnAction(new EventHandler<ActionEvent>() {
+				mview.confirm.setOnAction(new EventHandler<>() {
 					@Override
 					public void handle(ActionEvent actionEvent) {
 						String kategorie = mview.tfKategorie.getText();
@@ -240,29 +240,29 @@ public class LernkartenApp extends Application {
 						String antwort03 = mview.taAntwort03.getText();
 						String antwort04 = mview.taAntwort04.getText();
 						String antwort05 = mview.taAntwort05.getText();
-						String[] moeglicheantworten = {antwort01,antwort02,antwort03,antwort04,antwort05};
+						String[] moeglicheantworten = {antwort01, antwort02, antwort03, antwort04, antwort05};
 						ArrayList<Integer> hilfsArray = new ArrayList<>();
-						if(mview.cbAntwort01.isSelected()) {
+						if (mview.cbAntwort01.isSelected()) {
 							hilfsArray.add(0);
 						}
-						if(mview.cbAntwort02.isSelected()) {
+						if (mview.cbAntwort02.isSelected()) {
 							hilfsArray.add(1);
 						}
-						if(mview.cbAntwort03.isSelected()) {
+						if (mview.cbAntwort03.isSelected()) {
 							hilfsArray.add(2);
 						}
-						if(mview.cbAntwort04.isSelected()) {
+						if (mview.cbAntwort04.isSelected()) {
 							hilfsArray.add(3);
 						}
-						if(mview.cbAntwort05.isSelected()) {
+						if (mview.cbAntwort05.isSelected()) {
 							hilfsArray.add(4);
 						}
 						int[] richtigeAntworten = new int[hilfsArray.size()];
-						for(int i = 0; i < richtigeAntworten.length; i++) {
+						for (int i = 0; i < richtigeAntworten.length; i++) {
 							richtigeAntworten[i] = hilfsArray.get(i);
 						}
 						try {
-							MehrfachantwortKarte karte = new MehrfachantwortKarte(kategorie,titel,frage,moeglicheantworten,richtigeAntworten);
+							MehrfachantwortKarte karte = new MehrfachantwortKarte(kategorie, titel, frage, moeglicheantworten, richtigeAntworten);
 							lernkartei.hinzufuegen(karte);
 							listView.getItems().add(karte.toString());
 							mview.close();
@@ -271,12 +271,23 @@ public class LernkartenApp extends Application {
 						}
 					}
 				});
-				mview.cancel.setOnAction(new EventHandler<ActionEvent>() {
+				mview.cancel.setOnAction(new EventHandler<>() {
 					@Override
 					public void handle(ActionEvent actionEvent) {
 						mview.close();
 					}
 				});
+			}
+		});
+
+		learn.setOnAction(new EventHandler<>() {
+			@Override
+			public void handle(ActionEvent actionEvent) {
+				ArrayList<Lernkarte> karten = lernkartei.erzeugeDeck(spinner.getValue());
+				for (Lernkarte karte : karten) {
+					DialogUtil.showTextDialog(karte.getTitel(), karte.getKategorie(), (karte.getFrage() + "\n" + karte.getAntwortVorderseiteDialog()), "Rückseite zeigen");
+					DialogUtil.showTextDialog(karte.getTitel(), karte.getKategorie(), karte.getAntwortRueckseiteDialog(), "Nächste Karte anzeigen");
+				}
 			}
 		});
 	}

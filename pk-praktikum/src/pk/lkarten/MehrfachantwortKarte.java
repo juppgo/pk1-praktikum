@@ -28,6 +28,27 @@ public class MehrfachantwortKarte extends Lernkarte implements ValidierbareKarte
         return richtigeAntworten;
     }
 
+    @Override
+    public String getAntwortVorderseiteDialog() {
+        String antwortVorderseite = "";
+        int counter = 1;
+        for (int i = 0; i < this.moeglicheAntworten.length; i++) {
+            if(this.moeglicheAntworten[i] != null) {
+                antwortVorderseite += counter + ": " + this.moeglicheAntworten[i] + "\n";
+                counter++;
+            }
+        }
+        return antwortVorderseite;
+    }
+
+    public String getAntwortRueckseiteDialog() {
+        String antwortRueckseite = "Die richtigen Antworten sind: \n";
+        for(int i = 0; i < this.richtigeAntworten.length; i++) {
+            antwortRueckseite += richtigeAntworten[i]+1 + ": " + moeglicheAntworten[richtigeAntworten[i]] + "\n";
+        }
+        return antwortRueckseite;
+    }
+
     public void printMoeglicheAntworten() {
         int counter = 1;
         for (int i = 0; i < this.moeglicheAntworten.length; i++) {

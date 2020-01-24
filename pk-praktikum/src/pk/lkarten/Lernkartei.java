@@ -119,10 +119,9 @@ public class Lernkartei implements Serializable {
     }
 
     public Iterator<Lernkarte> getIterator() {
-        Iterator iterator = karten.iterator();
-//        while(iterator.hasNext()) {
+        //        while(iterator.hasNext()) {
 //            iterator.next();
 //        }
-        return iterator;
+        return karten.iterator();
     }
 }
