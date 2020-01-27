@@ -156,6 +156,8 @@ public class MehrfachantwortKarte extends Lernkarte implements ValidierbareKarte
             return false;
         if (!Arrays.equals(moeglicheAntworten, other.moeglicheAntworten))
             return false;
-        return Arrays.equals(richtigeAntworten, other.richtigeAntworten);
+        if (!Arrays.equals(richtigeAntworten, other.richtigeAntworten))
+            return false;
+        return true;
     }
 }

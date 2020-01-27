@@ -95,17 +95,17 @@ public abstract class Lernkarte implements ValidierbareKarte, CsvExportable, Ser
                 return false;
         } else if (!frage.equals(other.frage))
             return false;
-        if (id != other.id)
-            return false;
         if (kategorie == null) {
             if (other.kategorie != null)
                 return false;
         } else if (!kategorie.equals(other.kategorie))
             return false;
         if (titel == null) {
-            return other.titel == null;
-        } else
-            return titel.equals(other.titel);
+            if (other.titel != null)
+                return false;
+        } else if (!titel.equals(other.titel))
+            return false;
+        return true;
     }
 
     @Override

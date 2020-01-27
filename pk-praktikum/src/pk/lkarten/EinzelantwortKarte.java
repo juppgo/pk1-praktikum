@@ -98,8 +98,11 @@ public class EinzelantwortKarte extends Lernkarte implements ValidierbareKarte, 
 			return false;
 		EinzelantwortKarte other = (EinzelantwortKarte) obj;
 		if (antwort == null) {
-			return other.antwort == null;
-		} else return antwort.equals(other.antwort);
+			if (other.antwort != null)
+				return false;
+		} else if (!antwort.equals(other.antwort))
+			return false;
+		return true;
 	}
 
 

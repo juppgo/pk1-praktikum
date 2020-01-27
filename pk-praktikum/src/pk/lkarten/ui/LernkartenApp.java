@@ -80,8 +80,9 @@ public class LernkartenApp extends Application {
 		menuBar.getMenus().add(mLernkartei);
 
 		//Hauptfenster
+
+		ObservableList<Lernkarte> observableList = FXCollections.observableArrayList();
 		ListView<String> listView = new ListView<>();
-		ObservableList<String> observableList = FXCollections.observableArrayList();
 
 		Button learn = new Button("Lernen!");
 		Spinner<Integer> spinner = new Spinner<>();
@@ -104,11 +105,25 @@ public class LernkartenApp extends Application {
 		primaryStage.show();
 
 		// Event Handling
+		// Laden nicht korrekt implementiert, habe es nicht geschafft den Listener für die Lernkarten-Objekte zu erstellen
 		laden.setOnAction(new EventHandler<>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
 				lernkartei.laden();
-				observableList.addListener(new ListChangeListener<>() {
+//				observableList.addListener(new ListChangeListener<Lernkarte>() {
+//					@Override
+//					public void onChanged(ListChangeListener.Change<? extends Lernkarte> change) {
+//						while (change.next()) {
+//							if (change.wasAdded()) {
+//								List<? extends Lernkarte> sublist = change.getAddedSubList();
+//								for (Lernkarte a : sublist) {
+//									listView.getItems().add(a.toString());
+//								}
+//							}
+//						}
+//					}
+//				});
+				observableList.addListener(new ListChangeListener<Lernkarte>() {
 					@Override
 					public void onChanged(Change<? extends Lernkarte> change) {
 						while (change.next()) {
@@ -121,7 +136,7 @@ public class LernkartenApp extends Application {
 						}
 					}
 				});
-				// TODO Hashset in listView schreiben. Vll mit Iterator?
+
 //				for (lernkartei l: karten) {
 //					listView.getItems().add((String)lernkartei.getKarten());
 //				}
